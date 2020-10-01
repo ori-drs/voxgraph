@@ -8,8 +8,15 @@
   <arg name="debug_mode" value="false" />
   <arg name="show_rviz" value="true" />
 
-  <node pkg="tf" type="static_transform_publisher" name="os1_stuff" args="0 0 0 0 0 1 0 os1_sensor os1_lidar 100" />
-  <include file="$(find lidar_undistortion)/launch/os1_undistortion.launch" />
+  <!-- uncomment the line below and comment the arg "load_ouster_model" if you don't have the rooster_description package -->
+  <!--node pkg="tf" type="static_transform_publisher" name="os1_stuff" args="0 0 0 0 0 1 0 os1_sensor os1_lidar 100" /-->
+  
+  <include file="$(find lidar_undistortion_ros)/launch/os1_undistortion.launch">
+    <arg name="pose_topic" value="/penguin/piksi_node/enu_pose_fix" />
+    <arg name="load_ouster_model" value="true" />
+    <arg name="rviz" value="false" />
+    <arg name="simulation" value="true" />
+  </include>
 
   <include file="$(find voxgraph)/launch/voxgraph_mapper.launch" pass_all_args="true" />
 </launch>
